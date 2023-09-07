@@ -2,6 +2,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 
 public class EditSoft extends javax.swing.JFrame {
+    private String directorio;
 
     public EditSoft() {
         initComponents();
@@ -185,9 +186,9 @@ public class EditSoft extends javax.swing.JFrame {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = fileChooser.getSelectedFile();
-            String directoryPath = selectedDirectory.getAbsolutePath();
+            directorio = selectedDirectory.getAbsolutePath(); // Guarda la ruta en la variable
 
-            jLabel1.setText("Directorio actual: "+directoryPath);
+            jLabel1.setText("Directorio actual:"+directorio);
 
             jTextArea1.setText("");
 
@@ -195,12 +196,12 @@ public class EditSoft extends javax.swing.JFrame {
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile()) {
-                        jTextArea1.append("\u251C"+file.getName() + "\n");
+                        jTextArea1.append("\u251C- "+file.getName() + "\n");
                     }
                 }
             }
         }
-    }                                        
+    }                                       
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // add your handling code here:
