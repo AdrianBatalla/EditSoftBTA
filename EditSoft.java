@@ -206,12 +206,7 @@ public class EditSoft extends javax.swing.JFrame {
             File selectedDirectory = fileChooser.getSelectedFile();
             directorio = selectedDirectory.getAbsolutePath(); // Guarda la ruta en la variable
 
-<<<<<<< Updated upstream
             jLabel1.setText("Directorio actual:"+directorio);
-=======
-            // Muestra la ruta del directorio en el JLabel
-            jLabel1.setText("Directorio actual: "+directoryPath);
->>>>>>> Stashed changes
 
             // Limpia el contenido actual del JTextArea
             jTextArea1.setText("");
@@ -225,13 +220,8 @@ public class EditSoft extends javax.swing.JFrame {
                     }
                 }
             }
-<<<<<<< Updated upstream
         }
     }                                       
-=======
-        }  // TODO add your handling code here:
-    }                                        
->>>>>>> Stashed changes
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
