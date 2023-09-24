@@ -4,8 +4,6 @@
  */
 package com.batalla.editsoft;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,11 @@ import javax.swing.JFileChooser;
  */
 public class EditSoft extends javax.swing.JFrame {
     List<String> nombreArchivos = new ArrayList<String>();
+    List<String> nuevosNombres = new ArrayList<String>();
+    List<String> archivo_eliminar = new ArrayList<>();
+    List<String> recup = new ArrayList<>();
     private int catNumero;
+    private String directoryPath;
     /**
      * Creates new form UI
      */
@@ -38,6 +40,9 @@ public class EditSoft extends javax.swing.JFrame {
         jCambiarSi2.setVisible(false);
         //Karaoke
         
+        //Quitar palabra
+        jEliminarPalabra.setVisible(false);
+        jEliminarPalabraText.setVisible(false);
     }
 
     /**
@@ -79,6 +84,8 @@ public class EditSoft extends javax.swing.JFrame {
         jCambiarNo1 = new javax.swing.JCheckBox();
         jNumerosPregunta3 = new javax.swing.JLabel();
         jCambiarSi2 = new javax.swing.JCheckBox();
+        jEliminarPalabra = new javax.swing.JLabel();
+        jEliminarPalabraText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -110,7 +117,7 @@ public class EditSoft extends javax.swing.JFrame {
         jLabel3.setText("Seleccione una de las siguientes opciones");
         jLabel3.setToolTipText("");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Quitar numero", "Quitar En Vivo", "Cambiar de lugar", "Karaoke" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "Quitar numero", "Quitar En Vivo", "Cambiar de lugar", "Karaoke", "Quitar texto" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -202,52 +209,63 @@ public class EditSoft extends javax.swing.JFrame {
             }
         });
 
+        jEliminarPalabra.setText("Escriba la palabra exacta a eliminar");
+
+        jEliminarPalabraText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jEliminarPalabraTextActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGap(12, 12, 12)
+                            .addComponent(jEjemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jNumerosPregunta2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jCambiarSi1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jCambiarNo1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jNumeroEjemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jNumeroEjemplo3, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jNumeroEjemplo5, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jNumeroEjemplo7, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jNumerosPregunta3, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jCambiarSi2))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jNumerosPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jNumerosPregunta1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jNumerosGuion, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jNumerosText, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jCambiarSi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jEliminarPalabra, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jEliminarPalabraText)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jNumerosPregunta2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCambiarSi1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCambiarNo1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jNumeroEjemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jNumeroEjemplo3, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jNumeroEjemplo5, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jNumeroEjemplo7, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jNumerosPregunta, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jNumerosPregunta1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jNumerosGuion, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jNumerosText, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCambiarSi, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jNumerosPregunta3, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCambiarSi2))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jEjemplo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jNumeroEjemplo2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jNumeroEjemplo4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jNumeroEjemplo6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jNumeroEjemplo8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(22, 22, 22)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(jNumeroEjemplo2, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNumeroEjemplo4, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNumeroEjemplo6, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jNumeroEjemplo8, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(19, 19, 19))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,27 +279,28 @@ public class EditSoft extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNumerosGuion, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(jCambiarSi))
                     .addComponent(jNumerosPregunta1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jNumerosPregunta2)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jCambiarSi1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jCambiarNo1))
-                    .addComponent(jNumerosPregunta2))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCambiarSi1)
+                            .addComponent(jCambiarNo1))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jCambiarSi2))
-                    .addComponent(jNumerosPregunta3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jNumerosPregunta3)
+                    .addComponent(jCambiarSi2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jEliminarPalabra)
+                    .addComponent(jEliminarPalabraText))
+                .addGap(100, 100, 100)
                 .addComponent(jEjemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNumeroEjemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,7 +318,7 @@ public class EditSoft extends javax.swing.JFrame {
                 .addComponent(jNumeroEjemplo7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jNumeroEjemplo8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jButton1.setText("Cancelar");
@@ -310,6 +329,11 @@ public class EditSoft extends javax.swing.JFrame {
         });
 
         jButton3.setText("Guardar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Ejecutar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -422,9 +446,13 @@ public class EditSoft extends javax.swing.JFrame {
 
         int result = fileChooser.showOpenDialog(this);
 
+        nombreArchivos.clear();
+        nuevosNombres.clear();
+        recup.clear();
+
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = fileChooser.getSelectedFile();
-            String directoryPath = selectedDirectory.getAbsolutePath();
+            directoryPath = selectedDirectory.getAbsolutePath();
 
             // Muestra la ruta del directorio en el JLabel
             jLabel1.setText("Directorio actual: "+directoryPath);
@@ -437,7 +465,7 @@ public class EditSoft extends javax.swing.JFrame {
             if (files != null) {
                 for (File file : files) {
                     if (file.isFile()) {
-                        jTextArea1.append("\u251C"+file.getName() + "\n");
+                        jTextArea1.append("\u251C  "+file.getName() + "\n");
                         nombreArchivos.add(file.getName());
                     }
                 }
@@ -446,7 +474,25 @@ public class EditSoft extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        nuevosNombres.clear();
+        nombreArchivos.clear();
+        nombreArchivos.addAll(recup);
+        jTextArea1.setText(""); // Limpiar el JTextArea
+        // Agrega los nuevos nombres al JTextArea y renombra los archivos
+        File selectedDirectory = new File(directoryPath);
+        File[] files = selectedDirectory.listFiles();
+        
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                if (file.isFile()) {
+                    String nuevoNombre = recup.get(i);
+                    if (!nuevoNombre.isEmpty()) {
+                        jTextArea1.append("\u251C  "+nuevoNombre + "\n");
+                    }
+                }
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -572,11 +618,46 @@ public class EditSoft extends javax.swing.JFrame {
                 //En vivo
                 jNumerosPregunta3.setVisible(false);
                 jCambiarSi2.setVisible(false);
+            } else if("Eliminar Texto".equals(opcionSeleccionada)) {
+                jNumeroEjemplo1.setText("En Este ejemplo esta entre parentesis:");
+                jNumeroEjemplo2.setText("Grupo Firme - Se Cancela la Depre(360p_24fps_H264-128kbit_AAC)");
+                jNumeroEjemplo3.setText("Se pone el texto que se quiere eliminar y queda asi:");
+                jNumeroEjemplo4.setText("Grupo Firme - Se Cancela la Depre");
+                jNumeroEjemplo5.setText("En este otro ejemplo hay otro texto:");
+                jNumeroEjemplo6.setText("Grupo Firme - (360p_24fps_H264-128kbit_AAC)Se Cancela la Depre");
+                jNumeroEjemplo7.setText("se pone el texto y queda asi:");
+                jNumeroEjemplo8.setText("Grupo Firme - Se Cancela la Depre(Vivo)");
+                jInstrucciones.setVisible(true);
+                jNumeroEjemplo1.setVisible(true);
+                jNumeroEjemplo2.setVisible(true);
+                jNumeroEjemplo3.setVisible(true);
+                jNumeroEjemplo4.setVisible(true);
+                jNumeroEjemplo5.setVisible(true);
+                jNumeroEjemplo6.setVisible(true);
+                jNumeroEjemplo7.setVisible(true);
+                jNumeroEjemplo8.setVisible(true);
+                jEliminarPalabra.setVisible(true);
+                jEliminarPalabraText.setVisible(true);
+                // Oculta los componentes relacionados con "Quitar número"
+                jInstrucciones.setVisible(false);
+                //quitar numero
+                jNumerosPregunta.setVisible(false);
+                jNumerosText.setVisible(false);
+                jNumerosGuion.setVisible(false);
+                //cambiar de lugar
+                jNumerosPregunta1.setVisible(false);
+                jCambiarSi.setVisible(false);
+                jNumerosPregunta2.setVisible(false);
+                jCambiarSi1.setVisible(false);
+                jCambiarNo1.setVisible(false);
+                //En vivo
+                jNumerosPregunta3.setVisible(false);
+                jCambiarSi2.setVisible(false);
             } else {
                 // Otra opción (puedes manejarla aquí si es necesario)
             }
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    
     private void jCambiarSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCambiarSiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCambiarSiActionPerformed
@@ -594,9 +675,280 @@ public class EditSoft extends javax.swing.JFrame {
     }//GEN-LAST:event_jCambiarSi2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        String opcionSeleccionada = (String) jComboBox1.getSelectedItem();
+
+        if ("Quitar numero".equals(opcionSeleccionada)) {
+            // Limpiar el ArrayList de nuevos nombres
+            nuevosNombres.clear();
+            // Obtén el valor del JTextField jNumerosText
+            String catNumeroTexto = jNumerosText.getText();
+    
+            if (catNumeroTexto.isEmpty()) {
+                // Si el JTextField está vacío, muestra un mensaje de error
+                jTextArea2.setText("Por favor, ingrese un número en el campo 'Cuantos Números'");
+            } else {
+                try {
+                    // Intenta convertir el texto a un número
+                    catNumero = Integer.parseInt(catNumeroTexto);
+    
+                    // Verifica si el checkbox está seleccionado
+                    boolean quitarGuion = jNumerosGuion.isSelected();
+    
+                    // Limpiar el ArrayList de nuevos nombres
+                    nuevosNombres.clear();
+    
+                    // Itera sobre los nombres de archivos y realiza las modificaciones
+                    for (String nombreArchivo : nombreArchivos) {
+                        String nuevoNombre = nombreArchivo;
+    
+                        // Verifica si hay suficientes caracteres para eliminar
+                        if (catNumero < nuevoNombre.length()) {
+                            nuevoNombre = nuevoNombre.substring(catNumero);
+                            // Verifica si el checkbox está seleccionado y hay guión
+                            if (quitarGuion && nuevoNombre.contains("-")) {
+                                nuevoNombre = nuevoNombre.substring(nuevoNombre.indexOf("-") + 1).trim();
+                            }
+                        } else {
+                            // Si el número es mayor o igual a la longitud del nombre, elimina el nombre
+                            nuevoNombre = "";
+                        }
+    
+                        // Agrega el nuevo nombre al ArrayList de nuevos nombres
+                        nuevosNombres.add(nuevoNombre);
+                    }
+                    recup.addAll(nombreArchivos);
+                    actualizarJTextArea1();
+                } catch (NumberFormatException e) {
+                    // Si no se puede convertir el texto a número, muestra un mensaje de error
+                    jTextArea2.setText("Por favor, ingrese un número válido en el campo 'Cuantos Números'");
+                }
+            }
+        } else if ("Cambiar de lugar".equals(opcionSeleccionada)) {
+            // Limpiar el ArrayList de nuevos nombres
+            nuevosNombres.clear();
+
+            // Iterar sobre los nombres de archivos y realizar las modificaciones
+            for (String nombreArchivo : nombreArchivos) {
+
+                // Verificar el estado de los checkboxes para determinar cómo cambiar el lugar del guion
+                boolean antesGuion = jCambiarSi1.isSelected();
+                boolean despuesGuion = jCambiarNo1.isSelected();
+
+                // Modificar el nombre según la posición del guion y los checkboxes
+                String nuevoNombre;
+                if (antesGuion && !despuesGuion) {
+                    String[] partes = nombreArchivo.split("-");
+                    String antesprimerguion = partes[0];
+                    String nombreIncompleto = partes[1]+"-"+partes[2];
+                    int primerGuion = nombreIncompleto.indexOf('-');
+                    int punto = nombreIncompleto.indexOf('.');
+                    String nombreAntesGuion = nombreIncompleto.substring(0, primerGuion).trim();
+                    String nombreDespuesGuion = nombreIncompleto.substring(primerGuion + 1, punto).trim();
+                    String extension = nombreIncompleto.substring(punto);
+                    nuevoNombre = nombreDespuesGuion + "-" + antesprimerguion + "-" + nombreAntesGuion + extension;
+                    nuevosNombres.add(nuevoNombre);
+                } else if (!antesGuion && despuesGuion) {
+                    //despues
+                    int primerGuion = nombreArchivo.indexOf('-');
+                    int punto = nombreArchivo.indexOf('.');
+                    String nombreAntesGuion = nombreArchivo.substring(0, primerGuion).trim();
+                    String nombreDespuesGuion = nombreArchivo.substring(primerGuion + 1, punto).trim();
+                    String extension = nombreArchivo.substring(punto);
+                    nuevoNombre = nombreDespuesGuion + "-" + nombreAntesGuion + extension;
+                    nuevosNombres.add(nuevoNombre);
+                } else if (antesGuion && despuesGuion) {
+                    //antes y despues
+                    String[] partes = nombreArchivo.split("-");
+                    String antesprimerguion = partes[0];
+                    String nombreIncompleto = partes[1]+"-"+partes[2]+partes[3];
+                    int primerGuion = nombreIncompleto.indexOf('-');
+                    int punto = nombreIncompleto.indexOf('.');
+                    String nombreAntesGuion = nombreIncompleto.substring(0, primerGuion).trim();
+                    String nombreDespuesGuion = nombreIncompleto.substring(primerGuion + 1, punto).trim();
+                    String extension = nombreIncompleto.substring(punto);
+                    nuevoNombre = nombreDespuesGuion + "-" + antesprimerguion + "-" + nombreAntesGuion + extension;
+                    nuevosNombres.add(nuevoNombre);
+                } else if (!antesGuion && !despuesGuion) {
+                    //normal
+                    int primerGuion = nombreArchivo.indexOf('-');
+                    int punto = nombreArchivo.indexOf('.');
+                    String nombreAntesGuion = nombreArchivo.substring(0, primerGuion).trim();
+                    String nombreDespuesGuion = nombreArchivo.substring(primerGuion + 1, punto).trim();
+                    String extension = nombreArchivo.substring(punto);
+                    nuevoNombre = nombreDespuesGuion + "-" + nombreAntesGuion + extension;
+                    nuevosNombres.add(nuevoNombre);
+                } else {
+                    //normal
+                    int primerGuion = nombreArchivo.indexOf('-');
+                    int punto = nombreArchivo.indexOf('.');
+                    String nombreAntesGuion = nombreArchivo.substring(0, primerGuion).trim();
+                    String nombreDespuesGuion = nombreArchivo.substring(primerGuion + 1, punto).trim();
+                    String extension = nombreArchivo.substring(punto);
+                    nuevoNombre = nombreDespuesGuion + "-" + nombreAntesGuion + extension;
+                    nuevosNombres.add(nuevoNombre);
+                }
+            }
+            // Actualizar el contenido del JTextArea con los nuevos nombres
+            recup.addAll(nombreArchivos);
+            actualizarJTextArea1();
+        } else if ("Quitar En Vivo".equals(opcionSeleccionada)) {
+            // Limpiar el ArrayList de nuevos nombres
+            nuevosNombres.clear();
+            String nuevoNombre;
+            boolean checkbox = jCambiarSi2.isSelected();
+            // Limpiar el ArrayList de nuevos nombres
+            nuevosNombres.clear();
+            // Iterar sobre los nombres de archivos y realizar las modificaciones
+            for (String nombreArchivo : nombreArchivos) {
+                // Reemplazar "(En vivo)" por "(Vivo)"
+                if (checkbox && nombreArchivo.contains("(en vivo)")) {
+                    nuevoNombre = nombreArchivo.replace("(en vivo)", "(Vivo)");
+                    nuevosNombres.add(nuevoNombre);                                   
+                } else {
+                    if (nombreArchivo.contains("(En Vivo)")) {
+                        nuevoNombre = nombreArchivo.replace("(En Vivo)", "(Vivo)");
+                        nuevosNombres.add(nuevoNombre);
+                    } else if (nombreArchivo.contains("(En vivo)")) {
+                        nuevoNombre = nombreArchivo.replace("(En vivo)", "(Vivo)");
+                        nuevosNombres.add(nuevoNombre);
+                    } else {
+                        nuevoNombre = nombreArchivo.replace("(en Vivo)", "(Vivo)");
+                        nuevosNombres.add(nuevoNombre);
+                    }
+                }
+            }
+            recup.addAll(nombreArchivos);
+            actualizarJTextArea1();
+        } else if ("Karaoke".equals(opcionSeleccionada)) {
+            // Limpiar el ArrayList de nuevos nombres
+            nuevosNombres.clear();
+
+            // Lista para almacenar los nombres de los archivos emparejados
+            List<String> nombresEmparejados = new ArrayList<>();
+
+            // Iterar sobre los nombres de archivos y realizar las modificaciones
+            for (String nombreArchivo : nombreArchivos) {
+                String nombreSinExtension = nombreArchivo.substring(0, nombreArchivo.lastIndexOf('.'));
+                String extension = nombreArchivo.substring(nombreArchivo.lastIndexOf('.') + 1);
+
+                if (extension.equalsIgnoreCase("mp3")) {
+                    // Verificar si hay un archivo con la extensión .cdg emparejado
+                    String nombreArchivoCdg = nombreSinExtension + ".cdg";
+                    if (nombreArchivos.contains(nombreArchivoCdg)) {
+                        // Se ha encontrado el par, agregarlo a la lista de nombres emparejados
+                        nombresEmparejados.add(nombreArchivo);
+                    } else {
+                        if (nombreArchivo.contains(".mp3")) {
+                            nombresEmparejados.add("SERA ELIMINADO: "+nombreArchivo);
+                            archivo_eliminar.add(nombreArchivo);
+                        }
+                    }
+                } else {
+                    String nombreArchivoCdg = nombreSinExtension + ".mp3";
+                    if (nombreArchivos.contains(nombreArchivoCdg)){
+                        nombresEmparejados.add(nombreArchivo);
+                    } else {
+                        nombresEmparejados.add("SERA ELIMINADO: "+nombreArchivo);
+                        archivo_eliminar.add(nombreArchivo);
+                    }
+                }
+            }
+            // Actualizar el contenido del JTextArea con los nombres emparejados
+            nuevosNombres.addAll(nombresEmparejados);
+            recup.addAll(nombreArchivos);
+            actualizarJTextArea1();
+        } else if ("Eliminar Texto".equals(opcionSeleccionada)) {
+            String palabraAEliminar = jEliminarPalabraText.getText();
+
+            if (!palabraAEliminar.isEmpty()) {
+                eliminarPalabraEnNombres(palabraAEliminar);
+        
+                // Actualiza el contenido del JTextArea con los nuevos nombres
+                actualizarJTextArea1();
+            } else {
+                jTextArea2.setText("Por favor, ingrese una palabra a eliminar");
+            }
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Agrega los nuevos nombres al JTextArea y renombra los archivos
+        File selectedDirectory = new File(directoryPath);
+        File[] files = selectedDirectory.listFiles();
+        String opcionSeleccionada = (String) jComboBox1.getSelectedItem();
+        
+        // Renombrar el archivo en el sistema de archivos
+        if ("Karaoke".equals(opcionSeleccionada)){
+            eliminarArchivos(archivo_eliminar, directoryPath);
+        } else {
+            if (files != null) {
+                for (int i = 0; i < files.length; i++) {
+                    File file = files[i];
+                    if (file.isFile()) {
+                        String nuevoNombre = nuevosNombres.get(i);
+                        if (!nuevoNombre.isEmpty()) {
+                            String nuevoPath = selectedDirectory.getAbsolutePath() + File.separator + nuevoNombre;
+                            file.renameTo(new File(nuevoPath));
+                        }
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jEliminarPalabraTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jEliminarPalabraTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jEliminarPalabraTextActionPerformed
+
+    private void eliminarPalabraEnNombres(String palabraAEliminar) {
+        nuevosNombres.clear();
+    
+        for (String nombreArchivo : nombreArchivos) {
+            String nuevoNombre = nombreArchivo.replaceAll(palabraAEliminar, "");
+            nuevosNombres.add(nuevoNombre);
+        }
+    }
+    
+    private void eliminarArchivos(List<String> archivosAEliminar, String directorio) {
+        File directorioCarpeta = new File(directorio);
+
+        for (String nombreArchivo : archivosAEliminar) {
+            File archivo = new File(directorioCarpeta, nombreArchivo);
+
+            if (archivo.exists()) {
+                if (archivo.delete()) {
+                    System.out.println("Archivo eliminado: " + archivo.getAbsolutePath());
+                } else {
+                    System.out.println("No se pudo eliminar el archivo: " + archivo.getAbsolutePath());
+                }
+            } else {
+                System.out.println("El archivo no existe: " + archivo.getAbsolutePath());
+            }
+        }
+        archivo_eliminar.clear();
+    }
+    
+    private void actualizarJTextArea1() {
+        jTextArea1.setText(""); // Limpiar el JTextArea
+        // Agrega los nuevos nombres al JTextArea y renombra los archivos
+        File selectedDirectory = new File(directoryPath);
+        File[] files = selectedDirectory.listFiles();
+        
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                if (file.isFile()) {
+                    String nuevoNombre = nuevosNombres.get(i);
+                    if (!nuevoNombre.isEmpty()) {
+                        jTextArea1.append("\u251C  "+nuevoNombre + "\n");
+                    }
+                }
+            }
+        }
+        nombreArchivos.clear();
+        nombreArchivos.addAll(nuevosNombres);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -643,6 +995,8 @@ public class EditSoft extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCambiarSi2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jEjemplo;
+    private javax.swing.JLabel jEliminarPalabra;
+    private javax.swing.JTextField jEliminarPalabraText;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jInstrucciones;
     private javax.swing.JLabel jLabel1;
